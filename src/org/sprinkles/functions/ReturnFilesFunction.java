@@ -31,7 +31,7 @@ import org.sprinkles.Fn.Function;
  * @author kgilmer
  *
  */
-public class ReturnFilesFunction implements Function {
+public class ReturnFilesFunction implements Function<File, Collection<File>> {
 	/**
 	 * Get all files (not directories).  Assumes input is a File or Collection of Files.
 	 */
@@ -58,17 +58,15 @@ public class ReturnFilesFunction implements Function {
 	}
 	
 	@Override
-	public Object apply(Object element) {
-		File f = (File) element;
-		
-		Collection c = new ArrayList();
+	public Collection<File> apply(File f) {		
+		Collection<File> c = new ArrayList<File>();
 		
 		this.fileToCollection(f, c);
 		
 		return c;
 	}
 	
-	private void fileToCollection(File f, Collection container) {
+	private void fileToCollection(File f, Collection<File> container) {
 		if ((f.isFile() && incFile) || (f.isDirectory() && incDir)) {
 			container.add(f);
 		} 

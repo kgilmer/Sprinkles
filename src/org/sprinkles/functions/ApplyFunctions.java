@@ -42,7 +42,7 @@ public class ApplyFunctions implements Function {
 	public Object apply(Object element) {
 		Collection c = null;
 		
-		for (Function f: functions) {
+		for (Function<?,?> f: functions) {
 			if (c == null)
 				c = Fn.map(f, element);
 			else 

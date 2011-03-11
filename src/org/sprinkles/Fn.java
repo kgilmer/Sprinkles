@@ -40,14 +40,14 @@ public class Fn {
 	 * @author kgilmer
 	 * 
 	 */
-	public interface Function {
+	public interface Function<I, O> {
 		/**
+		 * @param <T>
 		 * @param element
 		 * @return result of function. If null is returned nothing is added to
 		 *         result.
 		 */
-		public Object apply(Object element);
-		// public <T>Object apply(T... element);
+		public O apply(I element);
 	}
 
 	/**
@@ -56,14 +56,14 @@ public class Fn {
 	 * @author kgilmer
 	 * 
 	 */
-	public interface FoldFunction {
+	public interface FoldFunction<I, O> {
 		/**
 		 * @param element
 		 * @param result
 		 *            - result from previous application of function.
 		 * @return
 		 */
-		public Object apply(Object element, Object result);
+		public O apply(I element, O result);
 	}
 
 	/**
@@ -77,14 +77,14 @@ public class Fn {
 	 * @return collection of results of execution of function. If null is
 	 *         returned from function, nothing is added.
 	 */
-	public static Collection map(Function function, Object input) {
-		Collection out = new ArrayList();
-		Collection in;
+	public static <I, O> Collection<O> map(Function<I, O> function, Object input) {
+		Collection<O> out = new ArrayList<O>();
+		Iterable in;
 
 		// If the input is iterable, treat as such, otherwise apply function to
 		// single element.
-		if (input instanceof Collection)
-			in = (Collection) input;
+		if (input instanceof Iterable)
+			in = (Iterable) input;
 		else
 			in = Arrays.asList(input);
 
@@ -110,21 +110,24 @@ public class Fn {
 	 * @param recurse
 	 *            Call apply on any elements of collection that are iterable.
 	 */
-	private static void applyMap(Function function, Iterable input, Collection collection, boolean stopFirstMatch, boolean adaptMap, boolean recurse) {
+	private static <I, O> void applyMap(Function<I, O> function, Iterable input, Collection<O> collection, boolean stopFirstMatch, boolean adaptMap, boolean recurse) {
 		for (Object child : input) {
 			boolean isIterable = child instanceof Collection;
 
+			/*if (adaptMap)
+				throw new RuntimeException("Adapt Map is broken!");*/
 			if (!isIterable && adaptMap) {
 				if (child instanceof Map) {
-					child = ((Map) child).values();
+					child = (I) ((Map) child).values();
 					isIterable = true;
 				}
 			}
 
 			if (isIterable && recurse) {
+				
 				applyMap(function, (Iterable) child, collection, stopFirstMatch, adaptMap, recurse);
 			} else {
-				Object result = function.apply(child);
+				O result = function.apply((I) child);
 
 				if (result != null) {
 					collection.add(result);
@@ -146,7 +149,7 @@ public class Fn {
 	 * @param elements
 	 * @return
 	 */
-	public static Object fold(FoldFunction function, Object input) {
+	public static <I, O> O fold(FoldFunction<I, O> function, Object input) {
 		Collection in;
 
 		// If the input is iterable, treat as such, otherwise apply function to
@@ -167,7 +170,7 @@ public class Fn {
 	 * @param recurse
 	 * @return
 	 */
-	private static Object applyFold(FoldFunction function, Iterable input, Object result, boolean adaptMap, boolean recurse) {
+	private static <I, O> O applyFold(FoldFunction<I, O> function, Iterable input, O result, boolean adaptMap, boolean recurse) {
 		for (Object child : input) {
 			boolean isIterable = child instanceof Collection;
 
@@ -181,7 +184,7 @@ public class Fn {
 			if (isIterable && recurse) {
 				result = applyFold(function, (Iterable) child, result, adaptMap, recurse);
 			} else {
-				result = function.apply(child, result);
+				result = function.apply((I) child, result);
 			}
 		}
 
@@ -197,8 +200,8 @@ public class Fn {
 	 * @param input
 	 * @return
 	 */
-	public static Object find(Function function, Object input) {
-		Collection out = new ArrayList();
+	public static <I, O> O find(Function<I, O> function, Object input) {
+		Collection<O> out = new ArrayList<O>();
 		Collection in;
 		if (input instanceof Collection)
 			in = (Collection) input;

@@ -71,11 +71,10 @@ public class Test {
 	private void fileSTest() {
 		//Collection fd = Mapper.fileToCollection(new File("/tmp"), false);
 		
-		Collection result = Fn.map(new Fn.Function() {
+		Collection result = Fn.map(new Fn.Function<File, File>() {
 			
 			@Override
-			public Object apply(Object element) {
-				File f = (File) element;
+			public File apply(File f) {
 				System.out.println(f.toString());
 				
 				return f;
