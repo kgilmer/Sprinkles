@@ -1,3 +1,0 @@
-Sprinkles is a set of static methods to allow for functional composition to be sprinkled into Java programs.  
-It includes 4 basic functional operations: map, fold, find, and depth-first map.  There are some very simple examples
-in the test package but more interesting examples will be provided shortly.  Refer to javadoc in doc for API details.
