@@ -35,15 +35,15 @@ public class ReturnFilesFunction implements Function<File, Collection<File>> {
 	/**
 	 * Get all files (not directories).  Assumes input is a File or Collection of Files.
 	 */
-	public static Function GET_FILES_FN = new ReturnFilesFunction(true, false, null, null);
+	public static Function<File, Collection<File>> GET_FILES_FN = new ReturnFilesFunction(true, false, null, null);
 	/**
 	 * Get all directories.  Assumes input is a File or Collection of Files.
 	 */
-	public static Function GET_DIRS_FN = new ReturnFilesFunction(false, true, null, null);
+	public static Function<File, Collection<File>> GET_DIRS_FN = new ReturnFilesFunction(false, true, null, null);
 	/**
 	 * Get all files and directories.  Assumes input is a File or Collection of Files.
 	 */
-	public static Function GET_FILES_AND_DIRS_FN = new ReturnFilesFunction(true, true, null, null);
+	public static Function<File, Collection<File>> GET_FILES_AND_DIRS_FN = new ReturnFilesFunction(true, true, null, null);
 	
 	private final boolean incFile;
 	private final boolean incDir;
