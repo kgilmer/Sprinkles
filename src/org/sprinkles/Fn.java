@@ -92,6 +92,27 @@ public class Fn {
 
 		return Collections.unmodifiableCollection(out);
 	}
+	
+	/**
+	 * Map a function over an input, adding results to a client-provided output collection.
+	 * @param <I>
+	 * @param <O>
+	 * @param function
+	 * @param input
+	 * @param out
+	 */
+	public static <I, O> void map(Function<I, O> function, Object input, Collection<O> out) {		
+		Iterable in;
+
+		// If the input is iterable, treat as such, otherwise apply function to
+		// single element.
+		if (input instanceof Iterable)
+			in = (Iterable) input;
+		else
+			in = Arrays.asList(input);
+
+		applyMap(function, in, out, false, true, true);
+	}
 
 	/**
 	 * The map function.
