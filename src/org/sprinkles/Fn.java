@@ -94,6 +94,35 @@ public class Fn {
 	}
 	
 	/**
+	 * Map a function over an input. Will recurse if any element is also
+	 * Iterable.
+	 * 
+	 * @param function
+	 *            to apply to input.
+	 * @param input
+	 *            element or Collection to apply the function.
+	 * @return collection of results of execution of function. If null is
+	 *         returned from function, nothing is added.
+	 */
+	public static <I, O> Collection<O> mapConcurrently(Function<I, O> function, Object input) {
+		Collection out = new ConcurrentCollectionExecutor(function);
+				
+		Iterable in;
+
+		// If the input is iterable, treat as such, otherwise apply function to
+		// single element.
+		if (input instanceof Iterable)
+			in = (Iterable) input;
+		else
+			in = Arrays.asList(input);
+
+		for (Object io: in)
+			out.add(io);
+
+		return out;
+	}
+	
+	/**
 	 * Map a function over an input, adding results to a client-provided output collection.
 	 * @param <I>
 	 * @param <O>
