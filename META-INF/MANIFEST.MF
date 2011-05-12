@@ -3,6 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Sprinkles
 Bundle-SymbolicName: org.sprinkles
 Bundle-Version: 1.0.0
-Import-Package:
 Export-Package: org.sprinkles,
  org.sprinkles.functions
