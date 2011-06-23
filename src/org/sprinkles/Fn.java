@@ -90,7 +90,9 @@ public class Fn {
 		// single element.
 		if (input instanceof Iterable)
 			in = (Iterable) input;
-		else
+		else if (input instanceof Object[])
+			in = Arrays.asList((Object []) input);
+		else 
 			in = Arrays.asList(input);
 
 		applyMap(function, in, out, false, true, true);
