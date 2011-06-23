@@ -74,10 +74,15 @@ public class Fn {
 	 *            to apply to input.
 	 * @param input
 	 *            element or Collection to apply the function.
+	 *            If input is null, function is not executed and empty list is returned.
+	 *            
 	 * @return collection of results of execution of function. If null is
 	 *         returned from function, nothing is added.
 	 */
 	public static <I, O> Collection<O> map(Function<I, O> function, Object input) {
+		if (input == null)
+			return Collections.emptyList();
+		
 		Collection<O> out = new ArrayList<O>();
 		Iterable in;
 
@@ -218,10 +223,13 @@ public class Fn {
 	 * Function.apply().
 	 * 
 	 * @param function
-	 * @param input
+	 * @param input input passed to function, if null is passed, null is returned without evaluation.
 	 * @return
 	 */
 	public static <I, O> O find(Function<I, O> function, Object input) {
+		if (input == null)
+			return null;
+		
 		Collection<O> out = new ArrayList<O>();
 		Collection in;
 		if (input instanceof Collection)
@@ -246,10 +254,13 @@ public class Fn {
 	 * recurse.
 	 * 
 	 * @param functions
-	 * @param input
+	 * @param input input to evaluate, if null passed in empty set is returned and no evaluation occurs.
 	 * @return
 	 */
 	public static Collection map(Collection<Function> functions, Object input) {
+		if (input == null)
+			return Collections.emptyList();
+		
 		Collection results = new ArrayList();
 		Collection ic = null;
 		if (input instanceof Collection) {
