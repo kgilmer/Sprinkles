@@ -2,26 +2,38 @@
 <project name="Sprinkles" default="jar">
 	<property name="project.description" value="Sprinkles: Add functional elements to Java programs." />
 	<property name="report.dir" location="${basedir}/junits" />
-	
+	<property name="dependencies.dir" location="${basedir}/deps" />
+	<property name="wget.bin" location="/usr/bin/wget" />
+	<property name="junit.jar.name" value="junit-osgi-4.9b2.jar" />
+	<property name="junit.jar.url" value="https://github.com/downloads/buglabs/bug-osgi/${junit.jar.name}" />
+
 	<tstamp>
 		<format property="TS_NOW" pattern="yyyy-MM-dd HH:mm:ss" />
 	</tstamp>
 
-
 	<target name="clean" description="remove intermediate files">
 		<delete dir="classes" />
-		<delete dir="${report.dir}"></delete>
+		<delete dir="${report.dir}" />
+		<delete dir="${dependencies.dir}" />
 	</target>
 
 	<target name="clobber" depends="clean" description="remove all artifact files">
 		<delete file="${ant.project.name}.jar" />
 	</target>
 
-	<target name="compile" depends="clean" description="compile the Java source code to class files">
+	<target name="fetch-deps" depends="clean" description="download dependencies">
+		<exec executable="${wget.bin}">
+			<arg line="-P ${dependencies.dir}" />
+			<arg line="--no-check-certificate" />
+			<arg line="${junit.jar.url}" />
+		</exec>
+	</target>
+
+	<target name="compile" depends="clean, fetch-deps" description="compile the Java source code to class files">
 		<mkdir dir="classes" />
 		<javac srcdir="src" destdir="classes" source="1.6" target="1.6" encoding="utf-8" fork="true" includeantruntime="false">
+			<classpath path="${dependencies.dir}/${junit.jar.name}"></classpath>
 			<include name="org/**" />
-			<exclude name="org/sprinkles/test/**" />
 		</javac>
 	</target>
 
@@ -32,6 +44,7 @@
 		</manifest>
 		<jar destfile="${ant.project.name}.jar" manifest="META-INF/MANIFEST.MF">
 			<fileset dir="classes" includes="**/*.class" />
+			<exclude name="org/sprinkles/test/**" />
 		</jar>
 	</target>
 
@@ -39,8 +52,10 @@
 	<target name="test" depends="jar">
 		<fail unless="report.dir" message="Ant variable report.dir must be defined." />
 		<echo message="Generating test result output in ${report.dir}..." />
-		<mkdir dir="${report.dir}"/>
+		<mkdir dir="${report.dir}" />
 		<junit printsummary="yes">
+			<classpath path="classes">
+			</classpath>
 			<formatter type="xml" />
 			<batchtest todir="${report.dir}">
 				<fileset dir="src">
