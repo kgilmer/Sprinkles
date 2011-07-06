@@ -54,8 +54,8 @@
 		<echo message="Generating test result output in ${report.dir}..." />
 		<mkdir dir="${report.dir}" />
 		<junit printsummary="yes">
-			<classpath path="classes">
-			</classpath>
+			<classpath path="classes" />
+			<classpath path="${dependencies.dir}/${junit.jar.name}" />
 			<formatter type="xml" />
 			<batchtest todir="${report.dir}">
 				<fileset dir="src">
