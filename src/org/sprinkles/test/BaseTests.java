@@ -143,7 +143,7 @@ public class BaseTests extends TestCase {
 		System.out.println(output);
 	}
 
-	private void testList() {
+	public void testList() {
 		List l = new ArrayList();
 
 		l.add("a");
@@ -166,7 +166,7 @@ public class BaseTests extends TestCase {
 		System.out.println(output);
 	}
 
-	private void testRawList() {
+	public void testRawList() {
 		final List l = new ArrayList();
 
 		l.add("a");
@@ -195,7 +195,7 @@ public class BaseTests extends TestCase {
 		System.out.println(output);
 	}
 
-	private void testString() {
+	public void testString() {
 		String[] s = { "a", "b", "c", "d", "e" };
 
 		Object input = Arrays.asList(s);
@@ -216,7 +216,7 @@ public class BaseTests extends TestCase {
 		System.out.println(output);
 	}
 
-	private void autoboxTest() {
+	public void testAutobox() {
 		int[] s = { 1, 2, 3, 4, 5 };
 
 		System.out.println(Arrays.asList(s).size());
@@ -240,7 +240,7 @@ public class BaseTests extends TestCase {
 		assertTrue(output.size() == 5);
 	}
 
-	private void testIntegers() {
+	public void testIntegers() {
 		Integer[] s = { 1, 2, 3, 4, 5 };
 
 		Iterable input = Arrays.asList(s);
