@@ -34,7 +34,7 @@
 	</target>
 
 	<target name="javadoc" depends="jar">
-		<javadoc sourcepath="." packagenames="org.sprinkles*, org.sprinkles.*" defaultexcludes="yes" destdir="docs/" author="true" version="true" use="true" windowtitle="${project.description}">
+		<javadoc sourcepath="src/" packagenames="org.sprinkles*, org.sprinkles.*" defaultexcludes="yes" destdir="docs/" author="true" version="true" use="true" windowtitle="${project.description}">
 		</javadoc>
 	</target>
 </project>
