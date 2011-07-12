@@ -270,6 +270,7 @@ public class BaseTests extends TestCase {
 			l.add("i" + i);
 		
 		System.out.println(
-				Fn.fold(new StringFunctions.JoinFn(","), l));
+				Fn.fold(
+					new StringFunctions.JoinFn(","), l));
 	}
 }

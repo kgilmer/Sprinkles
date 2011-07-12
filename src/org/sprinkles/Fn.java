@@ -184,6 +184,8 @@ public class Fn {
 		// single element.
 		if (input instanceof Collection)
 			in = (Collection) input;
+		else if (input instanceof Object[])
+			in = Arrays.asList((Object []) input);
 		else
 			in = Arrays.asList(input);
 
@@ -236,6 +238,8 @@ public class Fn {
 		Collection in;
 		if (input instanceof Collection)
 			in = (Collection) input;
+		else if (input instanceof Object[])
+			in = Arrays.asList((Object []) input);
 		else
 			in = Arrays.asList(input);
 
