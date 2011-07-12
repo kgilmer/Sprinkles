@@ -49,13 +49,26 @@ public interface FoldFunction<I, O> {
 ```
 
 ## Static Operations (methods) ##
+
+In the simplest case, just apply a Function to some kind of input.  The static method will determine if the input can be iterated over, 
+and if not the function will be applied to the single input.
 ```java
 public static <I, O> Collection<O> map(Function<I, O> function, Object input);
+```
 
+Here we apply a set of functions to an input.  The evaluation occurs depth-first.
+```java
 public static Collection map(Collection<Function> functions, Object input);
+```
 
+Perform a fold operation, meaning for each element in `input`, pass the value in and the result of the last call to the `FoldFunction`.  The 
+result of the final call is returned.
+```java
 public static <I, O> O fold(FoldFunction<I, O> function, Object input);
+```
 
+Perform a find operation.  Apply `Function` to the `input` until a non-null result is returned.
+```java
 public static <I, O> O find(Function<I, O> function, Object input);
 ```
 
