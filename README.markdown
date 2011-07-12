@@ -50,7 +50,7 @@ public interface FoldFunction<I, O> {
 
 ## Static Operations (methods) ##
 
-In the simplest case, just apply a Function to some kind of input.  The static method will determine if the input can be iterated over, 
+In the simplest case, just apply a `Function` to some kind of `input`.  The static method will determine if the input can be iterated over, 
 and if not the function will be applied to the single input.
 
 ```java
