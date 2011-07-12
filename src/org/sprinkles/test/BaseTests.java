@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 
 import org.sprinkles.Fn;
 import org.sprinkles.functions.ReturnFilesFunction;
+import org.sprinkles.functions.StringFunctions;
 
 
 
@@ -260,5 +261,15 @@ public class BaseTests extends TestCase {
 
 		System.out.println(output);
 		assertTrue(output.size() == 5);
+	}
+	
+	public void testStringFunctions() {
+		List<String> l = new ArrayList<String>();
+		
+		for (int i = 0 ; i < 100; ++i)
+			l.add("i" + i);
+		
+		System.out.println(
+				Fn.fold(new StringFunctions.JoinFn(","), l));
 	}
 }
