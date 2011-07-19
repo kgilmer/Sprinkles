@@ -28,7 +28,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.sprinkles.Eval;
+import org.sprinkles.Applier;
 import org.sprinkles.functions.FileFunctions;
 import org.sprinkles.functions.StringFunctions;
 
@@ -48,8 +48,8 @@ public class BaseTests extends TestCase {
 	public void testFiles() {
 		//Collection fd = Mapper.fileToCollection(new File("/tmp"), false);
 		
-		Collection<File> result = Eval.map(
-				Eval.map(new File("."), FileFunctions.GET_FILES_FN), new Eval.Fn<File, File>() {
+		Collection<File> result = Applier.map(
+				Applier.map(new File("."), FileFunctions.GET_FILES_FN), new Applier.Fn<File, File>() {
 			
 			@Override
 			public File apply(File f) {
@@ -77,7 +77,7 @@ public class BaseTests extends TestCase {
 			}
 		}
 		
-		Collection output = Eval.map(m.values(), new Eval.Fn() {
+		Collection output = Applier.map(m.values(), new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -100,7 +100,7 @@ public class BaseTests extends TestCase {
 
 		//Object input = Mapper.adaptToIterable(m);
 
-		Collection output = Eval.map(m.values(), new Eval.Fn() {
+		Collection output = Applier.map(m.values(), new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -129,7 +129,7 @@ public class BaseTests extends TestCase {
 
 		
 
-		Collection output = Eval.map(m, new Eval.Fn() {
+		Collection output = Applier.map(m, new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -152,7 +152,7 @@ public class BaseTests extends TestCase {
 		l.add("b");
 		l.add("c");
 
-		Collection output = Eval.map(l, new Eval.Fn() {
+		Collection output = Applier.map(l, new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -177,7 +177,7 @@ public class BaseTests extends TestCase {
 
 		Iterable input = l;
 
-		Collection output = Eval.map(input, new Eval.Fn() {
+		Collection output = Applier.map(input, new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -202,7 +202,7 @@ public class BaseTests extends TestCase {
 
 		Object input = Arrays.asList(s);
 
-		Collection output = Eval.map(input, new Eval.Fn() {
+		Collection output = Applier.map(input, new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -225,7 +225,7 @@ public class BaseTests extends TestCase {
 		
 		Iterable input = Arrays.asList(s);
 
-		Collection output = Eval.map(input, new Eval.Fn() {
+		Collection output = Applier.map(input, new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -247,7 +247,7 @@ public class BaseTests extends TestCase {
 
 		Iterable input = Arrays.asList(s);
 
-		Collection output = Eval.map(input, new Eval.Fn() {
+		Collection output = Applier.map(input, new Applier.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -271,7 +271,7 @@ public class BaseTests extends TestCase {
 			l.add("i" + i);
 		
 		System.out.println(
-				Eval.fold(
+				Applier.fold(
 					l, new StringFunctions.JoinFn(",")));
 	}
 }

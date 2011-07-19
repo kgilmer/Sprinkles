@@ -7,8 +7,8 @@ package org.sprinkles.functions;
 
 import java.util.Collection;
 
-import org.sprinkles.Eval;
-import org.sprinkles.Eval.FoldFn;
+import org.sprinkles.Applier;
+import org.sprinkles.Applier.FoldFn;
 
 /**
  * @author kgilmer
@@ -29,7 +29,7 @@ public final class StringFunctions {
 	 * @return A new string with all the elements joined with the delimiter.
 	 */
 	public static String join(Collection<String> in, String delimiter) {
-		return Eval.fold(in, new JoinFn(delimiter)).toString();
+		return Applier.fold(in, new JoinFn(delimiter)).toString();
 	}
 	
 	/**

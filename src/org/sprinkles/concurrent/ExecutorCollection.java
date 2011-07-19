@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.sprinkles.Eval.Fn;
+import org.sprinkles.Applier.Fn;
 
 /**
  * A collection implementation designed for concurrent execution of the results of a map operation.

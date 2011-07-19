@@ -1,5 +1,5 @@
 /*
- * Eval.java - Class for applying functions to sets.
+ * Applier.java - Class for applying functions to sets.
  * Created by Ken Gilmer, July, 2011.  See https://github.com/kgilmer/Sprinkles
  * Released into the public domain.
  */
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.sprinkles.Eval;
-import org.sprinkles.Eval.Fn;
+import org.sprinkles.Applier;
+import org.sprinkles.Applier.Fn;
 
 /**
  * A function to return files and directories.
@@ -47,7 +47,7 @@ public final class FileFunctions  {
 	 * @author kgilmer
 	 *
 	 */
-	public static class GetFiles implements Eval.Fn<File, Collection<File>> {
+	public static class GetFiles implements Applier.Fn<File, Collection<File>> {
 
 		private boolean incFile;
 		private boolean incDir;

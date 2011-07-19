@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import org.sprinkles.Eval.Fn;
+import org.sprinkles.Applier.Fn;
 
 /**
  * A collection implementation designed for concurrent execution of the results of a map operation.

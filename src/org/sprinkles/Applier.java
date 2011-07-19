@@ -1,5 +1,5 @@
 /*
- * Eval.java - Class for applying functions to sets.
+ * Applier.java - Class for applying functions to sets.
  * Created by Ken Gilmer, July, 2011.  See https://github.com/kgilmer/Sprinkles
  * Released into the public domain.
  */
@@ -20,12 +20,12 @@ import java.util.Map;
  * @author kgilmer
  * 
  */
-public final class Eval {
+public final class Applier {
 	
 	/**
 	 * Stateless utility class.
 	 */
-	private Eval() {
+	private Applier() {
 	}
 
 	/**
@@ -251,7 +251,7 @@ public final class Eval {
 		else
 			in = Arrays.asList(input);
 
-		Eval.applyMap(function, in, out, true, true, true);
+		Applier.applyMap(function, in, out, true, true, true);
 
 		if (out.size() > 1) {
 			throw new RuntimeException(
