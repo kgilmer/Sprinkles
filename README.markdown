@@ -8,7 +8,7 @@ Additional classes provide functions for common operations against types such as
 
 ## Walk filesystem tree and print files ##
 ```java
-Fn.map(new Fn.Function<File, File>() {
+Applier.map(Applier.map(FileFunctions.GET_FILES_FN, new File(".")), new Applier.Fn<File, File>() {
 	
 	@Override
 	public File apply(File f) {
@@ -16,7 +16,7 @@ Fn.map(new Fn.Function<File, File>() {
 		
 		return f;
 	}
-}, Fn.map(ReturnFilesFunction.GET_FILES_FN, new File(".")));
+});
 ```
 
 ## Join a List of String as a single String separated by commas ##
@@ -27,54 +27,12 @@ for (int i = 0 ; i < 100; ++i)
 	l.add("i" + i);
 
 System.out.println(
-		Fn.fold(
-			new StringFunctions.JoinFn(","), l));
+		Applier.fold(l, new StringFunctions.JoinFn(",")));
 ```
 
 # API #
 
-## Function Interface ##
-```java
-public interface Function<I, O> {
-	public O apply(I element);
-}
-```
-
-### The interface for Fold operations ###
-
-```java
-public interface FoldFunction<I, O> {	
-	public O apply(I element, O result);
-}
-```
-
-## Static Operations (methods) ##
-
-In the simplest case, just apply a `Function` to some kind of `input`.  The static method will determine if the input can be iterated over, 
-and if not the function will be applied to the single input.
-
-```java
-public static <I, O> Collection<O> map(Function<I, O> function, Object input);
-```
-
-Here we apply a set of functions to an input.  The evaluation occurs depth-first.
-
-```java
-public static Collection map(Collection<Function> functions, Object input);
-```
-
-Perform a fold operation, meaning for each element in `input`, pass the value in and the result of the last call to the `FoldFunction`.  The 
-result of the final call is returned.
-
-```java
-public static <I, O> O fold(FoldFunction<I, O> function, Object input);
-```
-
-Perform a find operation.  Apply `Function` to the `input` until a non-null result is returned.
-
-```java
-public static <I, O> O find(Function<I, O> function, Object input);
-```
+Refer to [Javadocs](https://leafcutter.ci.cloudbees.com/job/Sprinkles/javadoc/) for current API information.
 
 # Download #
 
@@ -86,4 +44,4 @@ public static <I, O> O find(Function<I, O> function, Object input);
 
 # License #
 
-Sprinkles uses the BSD-style license.
+Sprinkles is public domain.
