@@ -28,8 +28,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.sprinkles.Fn;
-import org.sprinkles.functions.ReturnFilesFunction;
+import org.sprinkles.Eval;
+import org.sprinkles.functions.FileFunctions;
 import org.sprinkles.functions.StringFunctions;
 
 
@@ -48,7 +48,8 @@ public class BaseTests extends TestCase {
 	public void testFiles() {
 		//Collection fd = Mapper.fileToCollection(new File("/tmp"), false);
 		
-		Collection<File> result = Fn.map(new Fn.Function<File, File>() {
+		Collection<File> result = Eval.map(
+				Eval.map(new File("."), FileFunctions.GET_FILES_FN), new Eval.Fn<File, File>() {
 			
 			@Override
 			public File apply(File f) {
@@ -56,7 +57,7 @@ public class BaseTests extends TestCase {
 				
 				return f;
 			}
-		}, Fn.map(ReturnFilesFunction.GET_FILES_FN, new File(".")));
+		});
 		
 		assertNotNull(result);		
 	}
@@ -76,7 +77,7 @@ public class BaseTests extends TestCase {
 			}
 		}
 		
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(m.values(), new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -85,7 +86,7 @@ public class BaseTests extends TestCase {
 				return element;
 			}
 			
-		}, m.values());
+		});
 		
 		assertTrue(output.size() == 10 * 10 * 10);
 	}
@@ -99,7 +100,7 @@ public class BaseTests extends TestCase {
 
 		//Object input = Mapper.adaptToIterable(m);
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(m.values(), new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -114,7 +115,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, m.values());
+		});
 
 		System.out.println(output);
 	}
@@ -128,7 +129,7 @@ public class BaseTests extends TestCase {
 
 		
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(m, new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -139,7 +140,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, m);
+		});
 
 		System.out.println(output);
 	}
@@ -151,7 +152,7 @@ public class BaseTests extends TestCase {
 		l.add("b");
 		l.add("c");
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(l, new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -162,7 +163,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, l);
+		});
 
 		System.out.println(output);
 	}
@@ -176,7 +177,7 @@ public class BaseTests extends TestCase {
 
 		Iterable input = l;
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(input, new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -191,7 +192,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, input);
+		});
 
 		System.out.println(output);
 	}
@@ -201,7 +202,7 @@ public class BaseTests extends TestCase {
 
 		Object input = Arrays.asList(s);
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(input, new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -212,7 +213,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, input);
+		});
 
 		System.out.println(output);
 	}
@@ -224,7 +225,7 @@ public class BaseTests extends TestCase {
 		
 		Iterable input = Arrays.asList(s);
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(input, new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -235,7 +236,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, input);
+		});
 
 		System.out.println(output);
 		assertTrue(output.size() == 5);
@@ -246,7 +247,7 @@ public class BaseTests extends TestCase {
 
 		Iterable input = Arrays.asList(s);
 
-		Collection output = Fn.map(new Fn.Function() {
+		Collection output = Eval.map(input, new Eval.Fn() {
 
 			@Override
 			public Object apply(Object element) {
@@ -257,7 +258,7 @@ public class BaseTests extends TestCase {
 				throw new RuntimeException("passed something funny!");
 			}
 
-		}, input);
+		});
 
 		System.out.println(output);
 		assertTrue(output.size() == 5);
@@ -270,7 +271,7 @@ public class BaseTests extends TestCase {
 			l.add("i" + i);
 		
 		System.out.println(
-				Fn.fold(
-					new StringFunctions.JoinFn(","), l));
+				Eval.fold(
+					l, new StringFunctions.JoinFn(",")));
 	}
 }

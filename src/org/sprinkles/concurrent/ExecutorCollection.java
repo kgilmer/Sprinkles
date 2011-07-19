@@ -1,19 +1,7 @@
 /*
- * Copyright (c) 2011, Ken Gilmer
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- * 
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
- * in the documentation and/or other materials provided with the distribution. Neither the name of the Ken Gilmer nor the names 
- * of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
- * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
- * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; 
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ExecutorCollection.java - Class for concurrent application of functions to set elements.
+ * Created by Ken Gilmer, July, 2011.  See https://github.com/kgilmer/Sprinkles
+ * Released into the public domain.
  */
 package org.sprinkles.concurrent;
 
@@ -29,12 +17,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.sprinkles.Fn.Function;
+import org.sprinkles.Eval.Fn;
 
 /**
  * A collection implementation designed for concurrent execution of the results of a map operation.
  * Passing this adapter into map() will result in each non-null response from the initial function to be 
  * spawned in a Function as part of a ExecutorService.
+ * 
+ * This class is experimental.
  * 
  * @author kgilmer
  *
@@ -42,7 +32,7 @@ import org.sprinkles.Fn.Function;
 public class ExecutorCollection implements Collection<Object>, ExecutorService {
 
 	private ExecutorService executor;
-	private final Function handler;
+	private final Fn handler;
 	private final Collection taskMap = new ArrayList();
 	
 	/**
@@ -50,7 +40,7 @@ public class ExecutorCollection implements Collection<Object>, ExecutorService {
 	 * 
 	 * @param handler
 	 */
-	public ExecutorCollection(Function handler) {
+	public ExecutorCollection(Fn handler) {
 		executor = Executors.newFixedThreadPool(1);
 		this.handler = handler;
 	}
@@ -61,7 +51,7 @@ public class ExecutorCollection implements Collection<Object>, ExecutorService {
 	 * @param executor
 	 * @param handler
 	 */
-	public ExecutorCollection(ExecutorService executor, Function handler) {
+	public ExecutorCollection(ExecutorService executor, Fn handler) {
 		this.executor = executor;
 		this.handler = handler;
 	}
@@ -281,10 +271,10 @@ public class ExecutorCollection implements Collection<Object>, ExecutorService {
 	 */
 	class FunctionRunnableAdapter implements Runnable {
 
-		private final Function f;
+		private final Fn f;
 		private final Object input;
 
-		public FunctionRunnableAdapter(Function f, Object input) {
+		public FunctionRunnableAdapter(Fn f, Object input) {
 			this.f = f;
 			this.input = input;
 		}
