@@ -29,18 +29,16 @@ public final class Applier {
 	}
 
 	/**
-	 * Apply a function to an object and return an object.
-	 * 
-	 * @author kgilmer
-	 * 
+	 * Interface that represents a Function in Sprinkles.
+	 *
+	 * @param <I> Input type
+	 * @param <O> Output type
 	 */
 	public interface Fn<I, O> {
 		/**
-		 * @param <T>
 		 * @param input Input to function
-		 * @return result of function. If null is returned nothing is added to
-		 *         result.
-		 */
+		 * @return result of function. A null result will not be tracked in any further recursing on input set for map() or find().
+		 */		
 		O apply(I input);
 	}
 
