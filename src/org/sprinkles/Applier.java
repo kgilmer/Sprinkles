@@ -95,6 +95,36 @@ public final class Applier {
 
 		return Collections.unmodifiableCollection(out);
 	}
+	
+	/**
+	 * Map whose input is known to be a single object.
+	 * 
+	 * @param <I>
+	 * @param <O>
+	 * @param input
+	 * @param function
+	 * @return
+	 */
+	public static <I, O> O mapSingle(Object input, Fn<I, O> function) {
+		if (input == null)
+			return null;
+		
+		Collection<O> out = new ArrayList<O>();
+		Iterable<?> in;
+
+		// If the input is iterable, treat as such, otherwise apply function to
+		// single element.
+		if (input instanceof Iterable)
+			in = (Iterable<?>) input;
+		else if (input instanceof Object[])
+			in = Arrays.asList((Object []) input);
+		else 
+			in = Arrays.asList(input);
+
+		applyMap(function, in, out, false, true, true);
+
+		return Collections.unmodifiableCollection(out).iterator().next();
+	}
 		
 	/**
 	 * Map a function over an input, adding results to a pre-existing output collection.
